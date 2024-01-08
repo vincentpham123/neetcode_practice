@@ -1,0 +1,22 @@
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        # i will have a pointer at the end and in the beginningt 
+        # if a pointer is pointing at a space or non alphabet, i will keep increasing or decreasing until it is
+        left = 0 
+        right = len(s)-1
+        
+        while left < right:
+            while left < right and not self.alphaNum(s[left]):
+                left+=1
+            # checking for left is less than right in the case that a string is all non-alphabet
+            
+            while right > left and not self.alphaNum(s[right]):
+                right-=1
+            if s[left].lower() != s[right].lower():
+                return False
+            left, right = left+1, right -1
+        return True
+
+    def alphaNum(self, c):
+        return (c.isalpha() or c.isdigit())
+            
