@@ -16,7 +16,43 @@ class Solution:
                 return False
             left, right = left+1, right -1
         return True
+        # new =''
+        # for a in s:
+        #     if a.isalpha() or a.isdigit():
+        #         new+= a.lower()
+
+        # return (new == new[::-1])
+    
+    ## alterntative soluytion that doesnt use two pointers
+
 
     def alphaNum(self, c):
         return (c.isalpha() or c.isdigit())
+    
+     
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+    # only6 one extra space
+    # i can create a hash to store 
+    
+        hash = {}
+        for idx, x in enumerate(numbers):
             
+            other_num = target - x 
+            
+            if other_num in hash:
+                return [hash[other_num]+1, idx+1]
+
+            hash[x] = idx
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        left = 0 
+        right = len(numbers) -1
+
+        while left < right:
+            curSum = numbers[left] + numbers[right]
+
+            if curSum < target:
+                left+=1 
+            elif curSum > target:
+                right-=1 
+            else:
+                return [left+1, right +1]
