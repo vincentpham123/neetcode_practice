@@ -87,3 +87,24 @@ class Solution:
                         while l < r and nums[l] == nums[l-1]:
                             l+=1 
             return res
+    def maxArea(self, height: List[int]) -> int:
+        
+        max_area = float('-inf')
+
+        left = 0 
+        right = len(height)-1
+
+        while left < right:
+            temp_area = min(height[left], height[right]) * (right-left)
+
+            max_area = max(temp_area, max_area)
+
+            if height[left] >= height[right]:
+                # in the example, when i get to 8, 
+                # i know I need to decrement the right 
+                right -=1 
+            else:
+                # in the example, when im at 1, and its less than 7 
+                # i know i should increment the lef tpoiunter 
+                left +=1 
+        return max_area
