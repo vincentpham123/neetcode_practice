@@ -108,3 +108,28 @@ class Solution:
                 # i know i should increment the lef tpoiunter 
                 left +=1 
         return max_area
+    
+    def trap(self, height: List[int]) -> int:
+        left = area = 0
+        right = len(height)-1
+        left_height = 0
+        right_height = 0
+        area = 0
+
+        while (left < right):
+            # i want to continue moving the left and right pointers while adding to the area
+            # since we are trapping rain water, i know that each index will add the smaller height 
+            #of left or right - element of the index
+            if (height[left]<height[right]):
+                if height[left] > left_height:
+                    left_height = height[left]
+                else:
+                    area += left_height - height[left]
+                left+=1
+            else:
+                if (height[right]>right_height):
+                    right_height = height[right]
+                else:
+                    area += right_height - height[right]
+                right-=1
+        return area
