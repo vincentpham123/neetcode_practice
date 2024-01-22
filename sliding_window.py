@@ -70,3 +70,23 @@ def checkInclusion(self, s1: str, s2: str) -> bool:
                 matches -= 1
             l += 1
         return matches == 26
+def characterReplacement(self, s: str, k: int) -> int:
+        count = {}
+
+        # this is used to keep track of the two char counts in s 
+
+        maxf = float('-inf')
+
+        left = 0 
+
+        for r in range(len(s)):
+            count[s[r]] = 1 + count.get(s[r],0)
+            # i will either add the current count of the string or add 0 if it doesnt exist yet 
+
+            maxf = max(maxf, count[s[r]])
+
+            if (r - left + 1) - maxf > k:
+                # the max amount of letters is replaced 
+                count[s[left]] -= 1 
+                left += 1 
+        return (r-left+1 )
