@@ -90,3 +90,53 @@ def characterReplacement(self, s: str, k: int) -> int:
                 count[s[left]] -= 1 
                 left += 1 
         return (r-left+1 )
+  def minWindow(self, s: str, t: str) -> str:
+        if t == "":
+            return ""
+
+        countT , window = {}, {}
+
+        for c in t:
+            countT[c] = 1 + countT.get(c, 0)
+        have, need = 0, len(countT)
+
+        res, resLen= [-1,-1], float("inf")
+
+        left = 0 
+
+        for right in range(len(s)):
+            c = s[right]
+            window[c] = 1 + window.get(c,0)
+            #checking if the window is the same as countT
+
+            if c in countT and window[c] == countT[c]:
+                have +=1 
+                # if a character is in the substring, have increases by 1
+            while have == need:
+                # update our result
+                # once we know our window has all letters, we can update, and move our window   
+                if (right-left+1) < resLen:
+                    # so if the current substring with all the letters in t 
+                    # are less than resLen, then we update
+                    res = [left,right]
+                    resLen = right - left + 1
+                window[s[left]] -= 1
+
+                if s[left] in countT and window[s[left]] < countT[s[left]]:
+                    have -=1 
+                    # if the current letter at the left is in t, and we have subtracted eith the line before, we reduce the have by 1, we have taken out a letter from t in the sliding window 
+                left += 1
+        
+        l, r = res 
+
+        return s[l: r +1] if resLen != float('inf') else ""
+
+                # we are now udpating the window
+                    
+                    
+
+
+        # cant return based on left and right because right will go to the end 
+
+
+
