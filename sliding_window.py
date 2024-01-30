@@ -90,7 +90,7 @@ def characterReplacement(self, s: str, k: int) -> int:
                 count[s[left]] -= 1 
                 left += 1 
         return (r-left+1 )
-  def minWindow(self, s: str, t: str) -> str:
+def minWindow(self, s: str, t: str) -> str:
         if t == "":
             return ""
 
