@@ -52,7 +52,27 @@ class Solution:
             else:
                 stack.append(int(c))
         return stack[0]
-                
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        # how can i use a stack to solve this
+        stack = []
+
+        # what will be in stack 
+        # maybe i put the index of each temperature
+
+        # how do i keep track of the amount of days 
+        # i can subtract the index to get the amount of days 
+        output = [0]*len(temperatures)
+        for index, temp in enumerate(temperatures):
+            
+            while stack and temp > temperatures[stack[-1]]:
+                #if stack has a number and its greater, i want to pop and adjust the index in output
+                current_day = stack.pop()
+                #current_day will be an index 
+                output[current_day] = index - current_day 
+                # that should update the current number 
+
+            stack.append(index)
+        return output
                 
 class MinStack:
 
