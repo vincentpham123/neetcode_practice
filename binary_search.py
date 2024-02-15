@@ -45,3 +45,35 @@ class Solution:
                 else:
                     return True 
             return False
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        #Input: piles = [3,6,7,11], h = 8
+        # 3 bananas, 6 bananas, 7 bananas, 11 bananas
+        # guard will come back in 8 hours
+        #Output: 4
+        # koko eats 4 bananas per hour which will allow her to finish all 27 bananas in 8 hours 
+
+        left = 1
+        right = 0
+
+        for pile in piles:
+            if pile > right:
+                right = pile 
+        
+        #now i have my left and right pointers for binary search
+        result = right 
+
+        while left <= right:
+            midpoint = (right+left)//2
+            totalTime = 0
+            for pile in piles:
+                totalTime += math.ceil(float(pile)/midpoint)
+                # adding up the amount of time it would take to eat banasas at midpoint pace 
+            # i then compare totalTime to hours 
+            if totalTime <= h:
+                result = midpoint
+                right = midpoint - 1 
+            else:
+                left = midpoint+1 
+            # we onyl care if totalTime is less than H 
+
+        return result
