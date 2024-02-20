@@ -96,3 +96,45 @@ class Solution:
                 end = mid - 1 
                 
         return min(curr_min,nums[start])
+    def search(self, nums: List[int], target: int) -> int:
+            left = 0 
+            right = len(nums)-1 
+
+            while left <= right:
+                midpoint = (right + left)//2 
+
+                # with my midpoint, how do I know which side to do to
+                # what do i have access to during each loop
+                # i have midpoint, target, left, and right 
+                
+                if target == nums[midpoint]:
+                    return midpoint 
+                
+                # how can i utilize the numbers pointed at with left and right 
+
+                # for example, i have midpoint at 7 
+                # left = 4 
+                # right = 2 
+                if nums[left] <= nums[midpoint]:
+                #if this condition is satisfied, i know that the left side is sorted
+                # and i can check for the target within the left sorted portion
+                    if nums[left] <= target < nums[midpoint]:
+                    # if target is greater that the most left number, then 
+                    # the target is on the right side, also if the target
+                    # is less than the midpoint, than it is on the right as well
+                        right = midpoint - 1 
+                    else:
+                        left = midpoint + 1
+
+                else:
+                    # if nums[midpoint] < nums[left]
+                    if nums[midpoint] < target <= nums[right]:
+                        left = midpoint + 1 
+                    else:
+                        right = midpoint - 1 
+                
+                
+            
+            return -1 
+
+            
