@@ -53,3 +53,23 @@ class Solution:
             else:
                 current_2 = None
         return dummy_head.next
+    def findDuplicate(self, nums: List[int]) -> int:
+            
+            # the trick to this problem is to find the cycle 
+            slow, fast = 0,0
+
+            while True:
+                slow = nums[slow]
+                fast = nums[nums[fast]]
+                # fast is gonna jump twice in the array 
+                if slow == fast:
+                    break 
+            
+            slow2 = 0 
+
+            while True:
+                slow = nums[slow]
+                # since slow is now pointing at the cycle, it will jump 
+                slow2 = nums[slow2]
+                if slow==slow2:
+                    return slow
