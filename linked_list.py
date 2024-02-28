@@ -86,5 +86,14 @@ class Solution:
                 slow = slow.next
                 fast = fast.next.next 
                 if slow == fast:
-                return True 
+                    return True 
             return False
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = fast = head 
+
+        while fast and fast.next:
+            # once fast reaches the end
+            slow = slow.next
+            fast = fast.next.next 
+
+        return slow
