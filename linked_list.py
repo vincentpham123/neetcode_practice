@@ -73,3 +73,18 @@ class Solution:
                 slow2 = nums[slow2]
                 if slow==slow2:
                     return slow
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+            
+            slow, fast = head, head 
+
+            # the logic to this algorithm:
+            # slow will go through the list 1 by 1 
+            # while fast will skip by 2 
+            # if a cycle does excist, fast and slow will eventually equal 
+
+            while fast and fast.next:
+                slow = slow.next
+                fast = fast.next.next 
+                if slow == fast:
+                return True 
+            return False
