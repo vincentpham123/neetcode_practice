@@ -36,3 +36,24 @@ class Solution:
         #     right = self.maxDepth(root.right, level + 1)
         #     level = max (right, level)
         # return level
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        # balanced means that each node either has no right or left node 
+        # or exactly two, also that the height does not exceed 1 difference
+
+        # in order to check that, i need my basecase to check when it is no longer a root
+        # so when there is no right or left. what do i bubble up
+
+        def dfs(root):
+            if not root:
+                return [True, 0]
+            # this will allow me to keep track of left and right presence and the height
+
+            left = dfs(root.left)
+            right = dfs(root.right)
+
+            # i need to check that left and right are both true and the heightr difference is 1 or 0
+
+            balanced = left[0] and right[0] and abs(left[1]-right[1]) <= 1
+
+            return [balanced, 1 + max(left[1], right[1]) ]
+        return dfs(root)[0]
