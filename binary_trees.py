@@ -57,3 +57,10 @@ class Solution:
 
             return [balanced, 1 + max(left[1], right[1]) ]
         return dfs(root)[0]
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:
+            return True
+        if p and q and p.val == q.val:
+            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        else:
+            return False
