@@ -64,3 +64,55 @@ class Solution:
             return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
         else:
             return False
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import deque
+class Solution:
+    def isSameTreeBFS(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:
+            return True 
+        if not p or not q:
+            return False 
+
+        queue = deque( [ ( p , q )])
+
+        # have a queue with tuples 
+
+        while queue:
+            node1, node2 = queue.popleft()
+
+            if not node1 and not node2:
+                continue
+            # if two Nones were added, continue with the loop, to eliminat ethe loop
+
+            if not node1 or not node2 or node1.val != node2.val:
+                return False
+                # if any of the nodes do not exist or their values are not equal, that means the trees are not the same
+
+            # if they are equal, add to the queue
+
+            queue.append(( node1.left, node2.left ))
+            queue.append(( node1.right, node2.right ))
+        return True
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        if not root:
+            return False
+        if not subRoot:
+            return True
+        if self.isSameTree(root, subRoot):
+            return True 
+        
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+    
+    def isSameTree(self, node1, node2):
+
+        if not node1 and not node2:
+            return True 
+        if node1 and node2 and node1.val == node2.val:
+            return self.isSameTree(node1.left,node2.left) and self.isSameTree(node1.right, node2.right)
+            # if the values are the same, i need to DFS and check if every value is the same 
+        return False
