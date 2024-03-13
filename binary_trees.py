@@ -116,3 +116,60 @@ class Solution:
             return self.isSameTree(node1.left,node2.left) and self.isSameTree(node1.right, node2.right)
             # if the values are the same, i need to DFS and check if every value is the same 
         return False
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        
+        # for this problem, i need to go down the tree one by one
+        # lets start at the root, i then check if it is an ancestor of p and q
+
+        current = root
+
+        while True:
+            # keep looping until I find it 
+            if current.val < p.val and current.val < q.val:
+                # if the current value is less than the two targets, then we movew onto the right side
+                # if it is in between 
+                current = current.right
+            elif current.val > p.val and current.val > q.val:
+                current = current.left
+            else:
+                return current
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        # i can use levels with array index 
+        if not root:
+            return []
+        result = []
+
+        queue = deque( [(root, 1)])
+
+        while queue:
+            node, level = queue.popleft()
+            
+            if len(result) < level:
+                result.append([])
+            
+            result[level-1].append(node.val)
+            if node.left:
+                queue.append((node.left, level+1))
+            if node.right:
+                queue.append((node.right, level+1))
+        return result
+    
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+        
+        root = TreeNode(preorder[0])
+        # with the preorder, i need to know where it sits in the inorder array
+        # this is so i know what to set left and right to
+
+        mid = inorder.index(preorder[0])
+        
+        # now that i have the root, i need to set the left and right
+
+        # now that i know where the left is, i need to split up
+        
+        root.left = self.buildTree(preorder[1:mid+1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid+1:], inorder[mid+1:])
+        # i know the next in preorder is left
+        # i also know that 9 is the only node on the left 
+        return root
