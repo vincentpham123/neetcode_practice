@@ -1,4 +1,6 @@
+
 class Solution:
+
     def subsets(self, nums: List[int]) -> List[List[int]]:
         if len(nums)==0:
             return [[]]
@@ -32,4 +34,29 @@ class Solution:
             dfs(i+1, cur, total)
         
         dfs(0, [],0)
+        return res
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        subset=[]
+
+        def backtrack(i):
+            
+            if i >=len(nums):
+                res.append(subset.copy())
+                return 
+
+            # now we are creating the subset where we include the nums[i]
+            subset.append(nums[i])
+            print('include', i)
+            # then we recursively call
+            backtrack(i+1)
+
+            # now we do the other tree 
+            subset.pop()
+            print('not include', i)
+            # this is remove the most recent and bring subset back to an empty list
+            backtrack(i+1)
+
+        backtrack(0)
         return res
