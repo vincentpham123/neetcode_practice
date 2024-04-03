@@ -47,3 +47,47 @@ class Solution:
 
             return copy
         return dfs(node) if node else None
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        
+        # this is a graph problem
+        # ill be traversing through a grid, searching for connecting 1's
+
+        visited = set()
+
+        max_area = float('-inf')
+        
+        rows, cols = len(grid), len(grid[0])
+        def dfs(r,c):
+
+            # water '0', out of bounds, and visited 
+
+            if (
+                r not in range(rows)
+                or c not in range(cols)
+                or (r,c) in visited
+                or grid[r][c] == 0
+            ):
+                # checking for visited because if we visited, that means we dont need to count it again 
+                return 0 
+            
+            visited.add((r,c))
+
+            left = dfs(r-1,c)
+            right = dfs(r+1,c)
+            up = dfs(r, c+1)
+            down = dfs(r, c-1)
+
+            # those will all be returning integers
+
+            return 1 + left + right + up + down 
+        
+        for r in range(rows):
+            for c in range(cols):
+                island_count = dfs(r, c)
+                max_area = max(island_count, max_area)
+        
+        if max_area == float('-inf'):
+            return 0
+        else:
+            return max_area
