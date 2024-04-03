@@ -27,3 +27,23 @@ def closest_carrot(grid, starting_row, starting_col):
         visited.add(pos)
         q.append((neighbor_row, neighbor_col, distance + 1))
   return -1
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        oldtonew = {}
+
+        def dfs(node):
+            if node in oldtonew:
+                return oldtonew[node]
+                # if its in old to new, there is alread a clone 
+            copy = Node(node.val)
+
+            oldtonew[node] = copy 
+
+            # now to check the neighbors 
+            for neighbor in node.neighbors:
+                copy.neighbors.append(dfs(neighbor))
+                #this will return a copy 
+
+            return copy
+        return dfs(node) if node else None
