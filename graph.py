@@ -91,3 +91,60 @@ class Solution:
             return 0
         else:
             return max_area
+        
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        # pacific grid[r][0], grid[0][c]
+        # atlantic grid[-1][c], grid[r][-1]
+
+        # find the 
+
+        rows, cols = len(heights), len(heights[0])
+        pac, atl = set(), set()
+        # check the height of a grid, then check north, west, south, east 
+        # we hit 
+        # for pacific: we keep going until we hit c = 0 , r=0
+        # for atlantic : we keep going until we hit r = len(grid) - 1. c = len(grid[0])-1 
+        # if it hits both then true and we add to the results 
+        # we add everything to visited 
+
+        # base case:
+        # if the grid[r][c] > the current height, so i need to store the current value in the dfs 
+
+        def dfs(r, c, visited, height):
+            if (
+                (r, c) in visited
+                or r < 0 
+                or c < 0 
+                or r == rows
+                or c == cols
+                or heights[r][c] < height
+            ):
+                return 
+            
+            visited.add((r,c))
+
+            dfs(r+1, c, visited, heights[r][c])
+            dfs(r-1, c,visited,  heights[r][c])
+            dfs(r, c+1,visited,  heights[r][c])
+            dfs(r, c-1,visited, heights[r][c])
+        
+        for c in range(cols):
+            dfs(0,c,pac, heights[0][c])
+            dfs(rows-1, c, atl, heights[rows-1][c])
+        #going out from the edge inwards, 
+        # instead of branching out
+        # we are going from the top and bottom row which are atlantic and pacific
+        # and running out DFS until it reaches an edge 
+
+        for r in range(rows):
+            dfs(r, 0, pac, heights[r][0])
+            dfs(r, cols-1, atl, heights[r][cols-1])
+        res = []
+        for r in range(rows):
+            for c in range(cols):
+                pair = (r,c)
+                if pair in pac and pair in atl:
+                    res.append([r,c])
+        
+        return res
