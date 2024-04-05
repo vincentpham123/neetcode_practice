@@ -148,3 +148,51 @@ class Solution:
                     res.append([r,c])
         
         return res
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        rows, cols = len(board), len(board[0])
+
+        # i know any island with connected to an edge will never become X's
+        # so i just need to find those and mark them 
+
+        # once i mark them, i can do another for loop, and chagne an O's that were not marked
+
+        def dfs(r,c):
+            if (
+                r<0
+                or c < 0
+                or r == rows
+                or c == cols
+                or board[r][c]!='O'
+            ):
+                return 
+            
+            board[r][c] = 'T'
+            #marking the islands on the edge 
+
+            dfs(r+1,c)
+            dfs(r-1,c)
+            dfs(r,c+1)
+            dfs(r,c-1)
+        # so we'll call this on on the surrounding areas of the grid 
+
+        for r in range(rows):
+            for c in range(cols):
+                if board[r][c] == 'O' and (r in [0,rows-1] or c in [0,cols-1]):
+                    # limiting the calls to islands on the edge
+                    dfs(r, c)
+                
+        # now that all surrounded islands are marked, we can go and change the remaining Os to X's
+
+        for r in range(rows):
+            for c in range(cols):
+                if board[r][c]=='O':
+                    board[r][c] = 'X'
+        for r in range(rows):
+            for c in range(cols):
+                if board[r][c]=='T':
+                    board[r][c] = 'O'
