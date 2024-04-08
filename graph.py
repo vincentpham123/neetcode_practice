@@ -288,3 +288,57 @@ class Solution:
                 if (r,c) in pac and (r,c) in atl:
                     result.append([r,c])
         return result
+
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        # i will need to chagne fresh oranges to rotten
+        
+        # i think the best way to approach this problem is through DFS
+        # DFS will allow me to keep track of the spoiling process just by its nature 
+
+        q = collections.deque()
+
+
+        rows, cols = len(grid), len(grid[0])
+
+        fresh = 0
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 2:
+                    # i know if its rotten, i need to append to the q
+                    q.append((r,c))
+                if grid[r][c] == 1:
+                    # what if i find a fresh 
+                    # this will be used to detemrine the result
+                    # as i spoil an orange, I'll decrement the fresh
+                    fresh += 1
+        
+        time = 0 
+
+        directions = [[1,0], [-1,0],[0,1],[0,-1]]
+        while fresh > 0 and q :
+
+            length = len(q)
+            # this is so I only pop the most recently added cordinates 
+
+            for i in range(length):
+                row, col = q.popleft()
+                # assuming this is the first rotten orange
+                # i need to traverse the graph
+
+                for dr, dc in directions:
+                    new_row, new_col = row + dr, col+dc 
+
+                    if (
+                        new_row in range(rows)
+                        and new_col in range(cols)
+                        and grid[new_row][new_col]==1
+                    ):
+                        # what do i do if its fresh
+                        grid[new_row][new_col] = 2
+                        q.append((new_row, new_col))
+                        fresh -= 1 
+            time += 1
+
+        return time if fresh == 0 else -1
+                        
