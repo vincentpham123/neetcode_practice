@@ -241,3 +241,50 @@ class Solution:
             time += 1
         
         return time if fresh==0 else -1
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        
+        rows, cols = len(heights), len(heights[0])
+
+        pac, atl = set(), set()
+        # the idea is that we will dfs from positions only on the borders
+        # if a position is in both sets, that means that it can be used to traverse to both oceans
+
+
+        def dfs(r, c, height,visited):
+
+            if (
+                (r,c) in visited
+                or r < 0 
+                or c < 0
+                or r == rows
+                or c == cols
+                or heights[r][c] < height
+                # we are checing this because the next position needs to be greater as we are going backwards
+            ):
+                return 
+            
+            visited.add((r,c))
+
+            dfs(r+1,c, heights[r][c], visited )
+            dfs(r-1,c, heights[r][c], visited )
+            dfs(r,c+1, heights[r][c], visited )
+            dfs(r,c-1, heights[r][c], visited )
+        
+
+        for c in range(cols):
+            dfs(0, c, heights[0][c], pac)
+            # i know that this will only check the the first row of the grid 
+            dfs(rows-1, c, heights[rows-1][c], atl)
+            # i know that this will only the last row of the grid ( atlantic ocean)
+        
+
+        for r in range(rows):
+            dfs(r, 0, heights[r][0], pac)
+            dfs(r, cols-1, heights[r][cols-1], atl)
+        result = []
+        for r in range(rows):
+            for c in range(cols):
+                if (r,c) in pac and (r,c) in atl:
+                    result.append([r,c])
+        return result
