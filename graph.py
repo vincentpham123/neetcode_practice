@@ -341,4 +341,51 @@ class Solution:
             time += 1
 
         return time if fresh == 0 else -1
-                        
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # so i will go through a graph with a class and its prereqs
+        # i will the iterate through the graph
+        
+
+        # now that i have a graph map with every prerequisite needed, I now that if a classes rereq has been visited, it is basically impossible 
+        # to take that class
+        graph = self.createGraph(numCourses, prerequisites)
+        visited = set()
+        visiting = set()
+
+        for node in graph:
+            if self._canfinish(graph, node, visited, visiting):
+                return False
+        return True
+
+
+    def _canfinish(self, graph, node, visited, visiting):
+        if node in visited:
+            return False
+        
+        if node in visiting:
+            return True 
+        
+        visiting.add(node)
+
+        for neighbor in graph[node]:
+            if self._canfinish(graph, neighbor, visited, visiting):
+                return True 
+        visiting.remove(node)
+        visited.add(node)
+
+        return False
+        
+
+            
+    def createGraph(self, numCourses, prereqs):
+        graph = {}
+        for i in range(numCourses):
+            graph[i] = []
+        
+        for course, prereq in prereqs:
+            graph[prereq].append(course)
+        
+        return graph
+
+        # now i have a graph
