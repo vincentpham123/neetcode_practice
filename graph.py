@@ -389,3 +389,47 @@ class Solution:
         return graph
 
         # now i have a graph
+
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        
+
+        graph = {i:[] for i in range(numCourses)}
+
+        # creating graph map
+
+        # i will take advantage of DFS's characteristics to find the course that does not require prereqs
+        # once I find that course, i append it to result, as it bubbles up, other courses will append to the result 
+
+        for course, pre in prerequisites:
+            graph[course].append(pre)
+
+
+        result = []
+        visiting, cycle = set(), set()
+
+        def dfs(course):
+
+            if course in visiting:
+                return True
+            
+            if course in cycle:
+                return False 
+            
+
+            cycle.add(course)
+
+            for neighbor in graph[course]:
+                if dfs(neighbor) == False:
+                    return False 
+            
+            cycle.remove(course)
+            visiting.add(course)
+            # i am only adding to visiting if its possible 
+            result.append(course)
+            return True 
+        
+        for c in range(numCourses):
+            if dfs(c) == False:
+                return []
+        return result
