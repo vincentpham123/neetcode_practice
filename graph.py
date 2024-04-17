@@ -433,3 +433,45 @@ class Solution:
             if dfs(c) == False:
                 return []
         return result
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        
+
+        graph = {i:[] for i in range(numCourses)}
+
+        # rather than start at the beginning of a pre requisite, I am gonna start from the end of a pre requisite class map
+        # that way when I reach the first prereq, I can add as I bubble up the stack
+        
+        for course, prereq in prerequisites:
+            graph[course].append(prereq)
+        
+        # now the graph will have courses and the prereqs to take 
+
+        # a prereq will have none 
+        visited = set()
+        cycle = set()
+        result = []
+        def dfs(course):
+            if course in visited:
+                return True 
+            
+            if course in cycle:
+                return False
+            
+            cycle.add(course)
+
+            # start the course map 
+
+            for pre in graph[course]:
+                if dfs(pre) == False:
+                    return False
+            
+            cycle.remove(course)
+            visited.add(course)
+            result.append(course)
+            return True 
+        
+        for c in range(numCourses):
+            if dfs(c) == False:
+                return []
+        return result
