@@ -61,3 +61,28 @@ class Solution:
             two = temp 
         
         return two
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        
+        # lets think about this
+
+        # we can start from the 1st or 2nd step 
+
+        # we can climb one or two steps 
+        # so each step we have the option to add up the i+1, or i +2 
+        # we also want the minimum
+        # as we take our steps, we should determine what is the minimum 
+        # and add as we go on 
+        # it is better to start at the end as well 
+        # that way we can start grabbing the min out of the choice of 1 or 2 steps
+
+        for i in range(len(cost)-3, -1, -1):
+            # this should start us at 3rd from last 
+
+            # we now need to add the costs to the current step 
+
+            cost[i] += min(cost[i+1], cost[i+2])
+            # as we go down the steps, we will dynamically update 
+        
+        return min(cost[0], cost[1])
