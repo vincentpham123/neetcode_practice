@@ -47,3 +47,17 @@ class Solution:
             rob1 = rob2
             rob2 = newRob
         return rob2
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        
+        # the idea is to start from the top and go down
+        
+        one, two = 1 ,1 
+
+        
+        for i in range(n-1, -1,-1):
+            temp = one 
+            one = two + one 
+            two = temp 
+        
+        return two
