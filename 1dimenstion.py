@@ -107,3 +107,36 @@ class Solution:
             house1 = house2 
             house2 = temp 
         return house2
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        
+        res = ""
+        resLen = 0
+
+        for i in range(len(s)):
+            # odd length
+            l, r = i ,i
+            # starting at the current index
+
+            while l>=0 and r < len(s) and s[l] == s[r]:
+                if (r-l+1) > resLen:
+                    res = s[l:r+1]
+                    resLen = r - l + 1
+                l -= 1 
+                r += 1
+
+                # starting from the middle and blooming out 
+            
+            # even length 
+
+            l, r = i , i+1 
+            # adding 1 to account for even length substrings
+            while l>=0 and r < len(s) and s[l] == s[r]:
+                if (r-l+1) > resLen:
+                    res = s[l:r+1]
+                    resLen = r - l + 1
+                l -= 1 
+                r += 1
+        return res
+        
