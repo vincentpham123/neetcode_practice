@@ -138,3 +138,85 @@ class Solution:
                 return False 
             stack.pop()
         return not stack
+    
+class Solution:
+    def calPoints(self, operations: List[str]) -> int:
+        stack = []
+
+        for i in operations:
+
+            if i == '+' and len(stack)>=2:
+                stack.append(stack[-1] + stack[-2])
+                continue
+            if i == 'D' and len(stack)>=1:
+                stack.append(stack[-1]*2)
+                continue
+            if i == 'C' and len(stack)>=1:
+                stack.pop()
+                continue
+            stack.append(int(i))
+        
+        return sum(stack)
+    
+class MyStack:
+
+    def __init__(self):
+        self.stack = collections.deque([])
+
+    def push(self, x: int) -> None:
+        self.stack.append(x)
+
+    def pop(self) -> int:
+        for i in range(len(self.stack)-1):
+            self.push(self.stack.popleft())
+        return self.stack.popleft()
+
+    def top(self) -> int:
+        for i in range(len(self.stack) - 1):
+            self.push(self.stack.popleft())
+        res = self.stack[0]
+        self.push(self.stack.popleft())
+        return res
+
+    def empty(self) -> bool:
+        
+        return len(self.stack) == 0
+    def removeStars(self, s: str) -> str:
+        stack = []
+
+
+        for char in s:
+            if char == '*':
+                stack.pop()
+            else:
+                stack.append(char)
+        return ''.join(stack)
+    
+    class Solution:
+def generateParenthesis(self, n: int) -> List[str]:
+        
+    stack =[]
+    res = []
+
+    def backtrack(openN, closeN):
+
+        # we know that there will be equal open and close 
+        if openN == closeN == n:
+            res.append(''.join(stack))
+            return 
+        
+
+        # i start by adding the open parenthesis 
+
+        if openN < n:
+            stack.append('(')
+            backtrack(openN+1, closeN)
+            stack.pop()
+            # this is the backtrack
+        if closeN < openN:
+            stack.append(')')
+            backtrack(openN, closeN+1)
+            stack.pop()
+    
+    backtrack(0,0)
+    return res
