@@ -220,3 +220,29 @@ def generateParenthesis(self, n: int) -> List[str]:
     
     backtrack(0,0)
     return res
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        
+        # the trick to this problem is to determine the time that each 
+
+        pairs = []
+
+        for i in range(len(position)):
+            pairs.append((position[i], speed[i]))
+        
+        pairs.sort()
+
+        stack = []
+        # stack will be used to keep track the the most recently added time
+        for i in range(len(pairs)-1, -1, -1):
+            # going reverse from position
+            position, speed = pairs[i]
+
+            time = (target-position)/speed
+
+            stack.append(time)
+
+            # how do i know if i have a fleet, when the speed of a car is slower 
+            if len(stack)>=2 and stack[-1] <= stack[-2]:
+                stack.pop()
+        return len(stack)
