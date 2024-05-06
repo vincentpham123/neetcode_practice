@@ -293,5 +293,17 @@ class Solution:
             curMin = min(tmp, n * curMin, n)
 
             res = max(res, curMax)
-        
         return res
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        return max(nums[0], self.rob_helper(nums[1:]), self.rob_helper(nums[:-1]))
+
+    def rob_helper(self, nums):
+        h1, h2 = 0,0
+
+        for i in nums:
+            temp =max(h1+i, h2)
+            h1 = h2 
+            h2 = temp 
+        return h2
