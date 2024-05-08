@@ -165,4 +165,30 @@ class TimeMap:
             else:
                 r = m - 1
         return res
+
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
         
+
+        return [self.binarySearch(nums, target, 'Left'), self.binarySearch(nums, target, 'Right')]
+    def binarySearch(self, nums, target, direction):
+
+        left, right = 0, len(nums)-1
+
+        res = -1
+
+        while left <= right:
+            midpoint = (left + right)//2
+
+            if nums[midpoint]> target:
+                right = midpoint -1 
+            elif nums[midpoint] < target:
+                left = midpoint + 1
+            else:
+                res = midpoint
+                if direction == 'Left':
+                    right = midpoint - 1
+                else:
+                    left = midpoint + 1
+        
+        return res
