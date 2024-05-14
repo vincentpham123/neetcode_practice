@@ -117,4 +117,23 @@ class Solution:
                 nums[mid], nums[high] = nums[high], nums[mid]
                 high -= 1
                 # we dont need to worry about what number we're exchanging with high 
+
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
         
+        # the trick to this problem is to check for +1 for a number in nums
+
+        # i need a constant look up time to check for +1 in nums
+
+        numSet = set(nums)
+
+
+        result = 0 
+
+        for n in nums:
+            
+            streak = 1
+            while (n+streak) in numSet:
+                streak +=1
+            result = max(streak, result)
+        return result
