@@ -87,3 +87,34 @@ class Solution:
                 total += b
                 countGap[total] = 1 + countGap.get(total, 0)
         return len(wall) - max(countGap.values())
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+
+        # i will need three 3 pointers
+        # 1 for the 0s, 1s and 2s 
+
+        low = 0 
+        mid = 0 
+        high = len(nums)-1
+
+        while mid <= high:
+            
+            # we are going to sort from the middle
+
+            if nums[mid]==0:
+                #if its a zero, we know we exchange with our pointer for zero(low)
+                nums[mid], nums[low] = nums[low], nums[mid]
+
+                mid += 1
+                low += 1
+            elif nums[mid] == 1:
+                mid += 1 
+            else:
+                # if nums[mid] == 2
+                nums[mid], nums[high] = nums[high], nums[mid]
+                high -= 1
+                # we dont need to worry about what number we're exchanging with high 
+        
