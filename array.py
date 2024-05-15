@@ -163,3 +163,22 @@ class Solution:
                     cols[c].add(board[r][c])
                     square[(r//3, c//3)].add(board[r][c])
         return True
+class Solution:
+    def gridGame(self, grid: List[List[int]]) -> int:
+        
+        result = float('inf')
+        left = 0
+
+        right = sum(grid[0])
+        # this will allow us to iterate right by subtracting
+        
+        for a,b in zip(grid[0], grid[1]):
+            # this will return pairs
+            # this will allow us to either go down or right 
+
+            right -= a
+            
+            result = min(result, max(right, left))
+
+            left += b
+        return result
