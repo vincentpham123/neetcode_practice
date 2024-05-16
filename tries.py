@@ -131,3 +131,44 @@ class WordDictionary:
 # obj = WordDictionary()
 # obj.addWord(word)
 # param_2 = obj.search(word)
+
+class WordDictionary:
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def addWord(self, word: str) -> None:
+        cur = self.root
+
+        for c in word:
+            if c not in cur.children:
+                cur.children[c] = TrieNode()
+            cur = cur.children[c]
+        cur.end = True
+
+    def search(self, word: str) -> bool:
+        # try with BFS
+
+        q = collections.deque([(self.root,0)])
+
+        while q:
+            node, i = q.popleft()
+            # i have my index and node
+            # i now need to check the word[i]
+
+            if i == len(word):
+                return True
+            if word[i]=='.':
+                for child in node.children.values():
+                    q.append((child,i+1))
+            else:
+                if word[i] in node.children:
+                    q.append((node.children[word[i]],i+1))
+        return False
+
+
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)
