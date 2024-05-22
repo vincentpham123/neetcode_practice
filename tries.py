@@ -250,3 +250,75 @@ class Solution:
             for c in range(COLS):
                 dfs(r, c, root, '')
         return list(res)
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.word = False
+        self.ref = 0 
+        # this is to keep track of the words associated with each TrieNode
+    def addWord(self, word):
+        cur = self
+        cur.ref += 1
+        for c in word:
+            if c not in cur.children:
+                cur.children[c] = TrieNode()
+            cur = cur.children[c]
+            cur.ref += 1
+        cur.word = True
+    def removeWord(self, word):
+        cur = self
+        cur.ref -= 1
+
+        for c in word:
+            if c in cur.children:
+                cur = cur.children[c]
+                cur.ref -= 1
+
+        
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        
+        root = TrieNode()
+
+        for word in words:
+            root.addWord(word)
+        
+        ROWS, COLS = len(board), len(board[0])
+
+        res, visited = set(), set()
+
+        def dfs(r,c,node, word):
+            # base cases
+            if (
+                r < 0 or
+                c < 0 or
+                r == ROWS or
+                c == COLS or
+                board[r][c] not in node.children or 
+                node.ref < 1 or
+                (r,c) in visited
+
+            ):
+                return 
+            
+            visited.add((r,c))
+
+            node = node.children[board[r][c]]
+            word += board[r][c]
+            if node.word:
+                node.word = False
+                res.add(word)
+                root.removeWord(word)
+            
+            dfs(r+1, c, node, word)
+            dfs(r-1, c, node, word)
+            dfs(r, c+1, node, word)
+            dfs(r, c-1, node, word)
+
+            visited.remove((r,c))
+        
+        for r in range(ROWS):
+            for c in range(COLS):
+                dfs(r, c, root, '')
+        return list(res)
+
